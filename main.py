@@ -62,11 +62,9 @@ async def loop():
     weekday = datetime.date.today().weekday()
     date = datetime.datetime.now().strftime('%Y%m%d')
     time = datetime.datetime.now().strftime('%H%M')
-    if is_weekend_or_holiday(weekday, date):
-        if time in timetables.weekends_and_holidays:  # 土日
-            channel = client.get_channel(channel_id)
-            await channel.send(url(date, time))
-    elif time in timetables.weekdays:  # 平日
+    timetable = timetables.weekends_and_holidays if is_weekend_or_holiday(
+        weekday, date) else timetables.weekdays
+    if time in timetable:
         channel = client.get_channel(channel_id)
         await channel.send(url(date, time))
 loop.start()
