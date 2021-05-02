@@ -1,6 +1,7 @@
 import datetime
 import os
 import sys
+from collections import namedtuple
 
 import discord
 import jpholiday
@@ -12,6 +13,12 @@ import data_shirase
 client = discord.Client()
 channel_id = data_shirase.channel_id()
 mention_id = "<@&"+str(data_shirase.role_id())+"> "
+
+Timetables = namedtuple('Timetables', ('weekends_and_holidays', 'weekdays'))
+timetables = Timetables(
+    weekends_and_holidays=['0850', '1700'],
+    weekdays=['0730', '1253', '1750', '2100']
+)
 
 
 @client.event
@@ -56,10 +63,10 @@ async def loop():
     date = datetime.datetime.now().strftime('%Y%m%d')
     time = datetime.datetime.now().strftime('%H%M')
     if is_weekend_or_holiday(weekday, date):
-        if time == '0850' or time == '1700':  # 土日
+        if time in timetables.weekends_and_holidays:  # 土日
             channel = client.get_channel(channel_id)
             await channel.send(url(date, time))
-    elif time == '0730' or time == '1253' or time == '1750' or time == '2100':  # 平日
+    elif time in timetables.weekdays:  # 平日
         channel = client.get_channel(channel_id)
         await channel.send(url(date, time))
 loop.start()
