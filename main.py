@@ -1,7 +1,7 @@
 import os
 import sys
 from collections import namedtuple
-from datetime import datetime
+from datetime import datetime, time
 
 import discord
 import jpholiday
@@ -16,8 +16,8 @@ mention_id = "<@&"+str(data_shirase.role_id())+"> "
 
 Timetables = namedtuple('Timetables', ('weekends_and_holidays', 'weekdays'))
 timetables = Timetables(
-    weekends_and_holidays=['0850', '1700'],
-    weekdays=['0730', '1253', '1750', '2100']
+    weekends_and_holidays=[time(8, 50), time(17)],
+    weekdays=[time(7, 30), time(12, 53), time(17, 50), time(21)]
 )
 
 
@@ -58,10 +58,10 @@ def url(datetime):
 
 @tasks.loop(seconds=60)
 async def loop():
-    now = datetime.now()
+    now = datetime.now().replace(second=0, microsecond=0)
     timetable = timetables.weekends_and_holidays if is_weekend_or_holiday(
         now) else timetables.weekdays
-    if now.strftime('%H%M') in timetable:
+    if now.time() in timetable:
         channel = client.get_channel(channel_id)
         await channel.send(mention_id + url(now))
 loop.start()
