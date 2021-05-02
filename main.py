@@ -38,7 +38,7 @@ async def on_message(message):
         await message.channel.send(reply)  # reply
 
 
-def is_holyday(weekday, date):
+def is_holiday(weekday, date):
     if weekday >= 5 or jpholiday.is_holiday(date):
         return 1
     else:
@@ -55,7 +55,7 @@ async def loop():
     weekday = datetime.date.today().weekday()
     date = datetime.datetime.now().strftime('%Y%m%d')
     time = datetime.datetime.now().strftime('%H%M')
-    if is_holyday(weekday, date) == 1:
+    if is_holiday(weekday, date) == 1:
         if time == '0850' or time == '1700':  # 土日
             channel = client.get_channel(channel_id)
             await channel.send(url(date, time))
