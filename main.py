@@ -42,10 +42,7 @@ async def on_message(message):
 
 
 def is_weekend_or_holiday(weekday, date):
-    if weekday >= 5 or jpholiday.is_holiday(date):
-        return 1
-    else:
-        return 0
+    return weekday >= 5 or jpholiday.is_holiday(date)
 
 
 def url(date, time):
@@ -58,7 +55,7 @@ async def loop():
     weekday = datetime.date.today().weekday()
     date = datetime.datetime.now().strftime('%Y%m%d')
     time = datetime.datetime.now().strftime('%H%M')
-    if is_weekend_or_holiday(weekday, date) == 1:
+    if is_weekend_or_holiday(weekday, date):
         if time == '0850' or time == '1700':  # 土日
             channel = client.get_channel(channel_id)
             await channel.send(url(date, time))
