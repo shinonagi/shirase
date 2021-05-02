@@ -52,21 +52,18 @@ def is_weekend_or_holiday(datetime):
     return datetime.weekday() >= 5 or jpholiday.is_holiday(datetime.date())
 
 
-def url(date, time):
-    url = mention_id + "https://radiko.jp/#!/ts/RN1/" + date + time + "00"
-    return url
+def url(datetime):
+    return datetime.strftime("https://radiko.jp/#!/ts/RN1/%Y%m%d%H%M00")
 
 
 @tasks.loop(seconds=60)
 async def loop():
     now = datetime.datetime.now()
-    date = now.strftime('%Y%m%d')
-    time = now.strftime('%H%M')
     timetable = timetables.weekends_and_holidays if is_weekend_or_holiday(
         now) else timetables.weekdays
-    if time in timetable:
+    if now.strftime('%H%M') in timetable:
         channel = client.get_channel(channel_id)
-        await channel.send(url(date, time))
+        await channel.send(mention_id + url(now))
 loop.start()
 
 
