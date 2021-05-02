@@ -49,7 +49,7 @@ async def on_message(message):
 
 
 def is_weekend_or_holiday(datetime):
-    return datetime.weekday() >= 5 or jpholiday.is_holiday(datetime.date())
+    return datetime.weekday() >= 5 or jpholiday.is_holiday(datetime)
 
 
 def url(datetime):
