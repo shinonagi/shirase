@@ -48,8 +48,8 @@ async def on_message(message):
         await message.channel.send(reply)  # reply
 
 
-def is_weekend_or_holiday(weekday, date):
-    return weekday >= 5 or jpholiday.is_holiday(date)
+def is_weekend_or_holiday(datetime):
+    return datetime.weekday() >= 5 or jpholiday.is_holiday(datetime.date())
 
 
 def url(date, time):
@@ -59,11 +59,11 @@ def url(date, time):
 
 @tasks.loop(seconds=60)
 async def loop():
-    weekday = datetime.date.today().weekday()
-    date = datetime.datetime.now().strftime('%Y%m%d')
-    time = datetime.datetime.now().strftime('%H%M')
+    now = datetime.datetime.now()
+    date = now.strftime('%Y%m%d')
+    time = now.strftime('%H%M')
     timetable = timetables.weekends_and_holidays if is_weekend_or_holiday(
-        weekday, date) else timetables.weekdays
+        now) else timetables.weekdays
     if time in timetable:
         channel = client.get_channel(channel_id)
         await channel.send(url(date, time))
