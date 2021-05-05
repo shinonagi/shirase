@@ -32,16 +32,16 @@ async def on_message(message):
     if client.user in message.mentions:
         command = message.content.split()[1]
         if command == 'test':
-            await message.channel.send(mention_id + 'test')
+            await message.channel.send(f'{message.author.mention} test')
         elif command == 'shutdown':
             if message.author.guild_permissions.administrator:
-                await message.channel.send('shutdown now')
+                await message.channel.send(f'{message.author.mention} shutdown now')
                 await client.logout()
                 print('logouted')
             else:
-                await message.channel.send('you are not admin user')
+                await message.channel.send(f'{message.author.mention} you are not admin user')
         else:
-            await message.channel.send('no such command')
+            await message.channel.send(f'{message.author.mention} no such command')
 
 
 def is_weekend_or_holiday(datetime):
