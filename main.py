@@ -41,7 +41,7 @@ async def on_message(message):
             else:
                 await message.channel.send('you are not admin user')
         else:
-            await message.channel.send('no such commnad')
+            await message.channel.send('no such command')
 
 
 def is_weekend_or_holiday(datetime):
