@@ -30,10 +30,10 @@ async def on_message(message):
     if message.author.bot:
         return
     if client.user in message.mentions:
-        list_content = message.content.split()
-        if list_content[1] == 'test':  # test
+        command = message.content.split()[1]
+        if command == 'test':
             await message.channel.send(mention_id + 'test')
-        elif list_content[1] == 'shutdown':  # shutdown
+        elif command == 'shutdown':
             if message.author.guild_permissions.administrator:
                 await message.channel.send('shutdown now')
                 await client.logout()
