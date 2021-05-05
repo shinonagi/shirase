@@ -7,7 +7,6 @@ import discord
 import jpholiday
 from discord.ext import tasks
 
-sys.path.append(os.pardir)
 import data_shirase
 
 client = discord.Client()
