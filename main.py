@@ -30,11 +30,9 @@ async def on_message(message):
     if message.author.bot:
         return
     if client.user in message.mentions:
-        global reply
-        reply = ""
         list_content = message.content.split()
         if list_content[1] == 'test':  # test
-            reply = mention_id + "test"
+            await message.channel.send(mention_id + 'test')
         elif list_content[1] == 'shutdown':  # shutdown
             if message.author.guild_permissions.administrator:
                 await message.channel.send('shutdown now')
@@ -42,9 +40,8 @@ async def on_message(message):
                 print('logouted')
             else:
                 await message.channel.send('you are not admin user')
-        if reply == "":
-            reply = 'no such commnad'
-        await message.channel.send(reply)  # reply
+        else:
+            await message.channel.send('no such commnad')
 
 
 def is_weekend_or_holiday(datetime):
