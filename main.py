@@ -1,7 +1,7 @@
 import os
 import sys
 from collections import namedtuple
-from datetime import datetime, time
+from datetime import datetime, timedelta, timezone, time
 
 import discord
 import jpholiday
@@ -54,7 +54,8 @@ def url(datetime):
 
 @tasks.loop(seconds=60)
 async def loop():
-    now = datetime.now().replace(second=0, microsecond=0)
+    now = datetime.now(timezone(timedelta(hours=+9), 'JST')
+                       ).replace(second=0, microsecond=0)
     timetable = timetables.weekends_and_holidays if is_weekend_or_holiday(
         now) else timetables.weekdays
     if now.time() in timetable:
