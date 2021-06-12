@@ -10,11 +10,12 @@ shirase は discord.py と jpholiday に依存します。
 
 ## 使い方
 
-1. 以下のリンクを参考に、`discord.py` と `jpholiday` をインストールします。
-   - <https://github.com/Rapptz/discord.py>
-   - <https://github.com/Lalcs/jpholiday>
+main.pyをそのまま実行する方法と、Dockerを使う方法があります。  
+どちらの方法でも、先に共通の作業が必要です。
 
-2. `./data_shirase.py` を作成し、以下を返す関数を定義します。:トークン, チャンネルID, ロールID。
+### 共通の作業
+
+`./data_shirase.py` を作成し、以下を返す関数を定義します。:トークン, チャンネルID, ロールID。
 
 ```python
 def token():
@@ -24,3 +25,15 @@ def channel_id():
 def role_id():
   return 987654321
 ```
+
+### main.pyをそのまま実行する場合
+
+1. 以下のリンクを参考に、`discord.py` と `jpholiday` をインストールします。
+   - <https://github.com/Rapptz/discord.py>
+   - <https://github.com/Lalcs/jpholiday>
+
+2. main.pyを実行します。
+
+### Dockerを使う場合
+
+ビルドし、デプロイします。
